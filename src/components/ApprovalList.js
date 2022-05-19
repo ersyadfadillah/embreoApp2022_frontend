@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useNavigate, Link } from "react-router-dom";
 import dateFormat from 'dateformat';
 
-const ProposalList = () => {
+const ApprovalList = () => {
     const [nama, setNama] = useState('');
     const [token, setToken] = useState('');
     const [expire, setExpire] = useState('');
@@ -34,14 +34,14 @@ const ProposalList = () => {
     });
 
     // start form
-    const [proposals, setProposal] = useState([]);
+    const [approvals, setProposal] = useState([]);
 
     useEffect(() => {
-        getProposal();
+        getApproval();
     }, []);
 
-    const getProposal = async () => {
-        const response = await axiosJwt.get('http://localhost:5000/proposals', {
+    const getApproval = async () => {
+        const response = await axiosJwt.get('http://localhost:5000/approvals', {
             headers:{
                 Authorization: `Bearer ${token}`
             }
@@ -50,17 +50,16 @@ const ProposalList = () => {
     }
 
     const deleteProposal = async (id) => {
-        await axiosJwt.delete('http://localhost:5000/proposals/'+id,  {
+        await axiosJwt.delete('http://localhost:5000/approvals/'+id,  {
             headers:{
                 Authorization: `Bearer ${token}`
             }
         });
-        getProposal();
+        getApproval();
     }
 
   return (
     <div className='container mt-5'>
-        <Link to='/proposal/add' className='button is-primary mt-3'>Tambah Data</Link>
         <table className='table is-striped is-fullwidth mt-5'>
           <thead>
             <tr>
@@ -68,8 +67,8 @@ const ProposalList = () => {
               <th rowSpan='2' colSpan='1' className='has-text-centered'>Company</th>
               <th rowSpan='2' colSpan='1' className='has-text-centered'>Name</th>
               <th rowSpan='1' colSpan='4' className='has-text-centered'>Proposal Event</th>
-              {/* <th rowSpan='2' colSpan='1' className='has-text-centered'>Status</th>
-              <th rowSpan='2' colSpan='1' className='has-text-centered'>Confirmed By</th>
+              <th rowSpan='2' colSpan='1' className='has-text-centered'>Status</th>
+              {/* <th rowSpan='2' colSpan='1' className='has-text-centered'>Confirmed By</th>
               <th rowSpan='2' colSpan='1' className='has-text-centered'>Comment</th> */}
               <th rowSpan='2' colSpan='1' className='has-text-centered'>Action</th>
             </tr>
@@ -81,21 +80,20 @@ const ProposalList = () => {
             </tr>
           </thead>
           <tbody>
-              { proposals.map((proposal_row, proposal_key) => (
-                <tr key={ proposal_row.id }>
+              { approvals.map((approval_row, proposal_key) => (
+                <tr key={ approval_row.id }>
                     <td>{ proposal_key + 1 }</td>
-                    <td>{ proposal_row.company }</td>
-                    <td>{ proposal_row.event_name }</td>
-                    <td>{ dateFormat(proposal_row.event_date, "dd/mm/yyyy") }</td>
-                    <td>{ dateFormat(proposal_row.event_date2, "dd/mm/yyyy") }</td>
-                    <td>{ dateFormat(proposal_row.event_date3, "dd/mm/yyyy") }</td>
-                    <td>{ proposal_row.event_location }</td>
-                    {/* <td>{ proposal_row.status==0 ? 'Pending' : (proposal_row.status==2 ? 'Approve' : 'Reject') }</td>
-                    <td>{ proposal_row.update_by!=null ? proposal_row.User.nama+' ('+dateFormat(proposal_row.updatedAt, "dd/mm/yyyy hh:ss")+')' : '-' }</td>
-                    <td>{ proposal_row.komen }</td> */}
+                    <td>{ approval_row.company }</td>
+                    <td>{ approval_row.event_name }</td>
+                    <td>{ dateFormat(approval_row.event_date, "dd/mm/yyyy") }</td>
+                    <td>{ dateFormat(approval_row.event_date2, "dd/mm/yyyy") }</td>
+                    <td>{ dateFormat(approval_row.event_date3, "dd/mm/yyyy") }</td>
+                    <td>{ approval_row.event_location }</td>
+                    <td>{ approval_row.status==0 ? 'Pending' : (approval_row.status==2 ? 'Approve' : 'Reject') }</td>
+                    {/* <td>{ approval_row.update_by!==null ? approval_row.User.nama+' ('+dateFormat(approval_row.updatedAt, "dd/mm/yyyy hh:ss")+')' : '-' }</td>
+                    <td>{ approval_row.komen }</td> */}
                     <td>
-                        {/* <Link to={'/proposal/edit/'+proposal_row.id} className='button is-small is-info'>Edit</Link> */}
-                        <button onClick={() => deleteProposal(proposal_row.id) } className='button is-small is-danger'>Delete</button>
+                        <Link to={'/approval/edit/'+approval_row.id} className='button is-small is-info'>Approval</Link>
                     </td>
                 </tr>
               ))}
@@ -106,4 +104,4 @@ const ProposalList = () => {
   )
 }
 
-export default ProposalList
+export default ApprovalList

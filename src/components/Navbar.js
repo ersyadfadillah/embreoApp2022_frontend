@@ -102,27 +102,33 @@ const Navbar = () => {
             <a href="http://localhost:3000/dashboard" className="navbar-item">
                 Home
             </a>
+            
+            { userLevel=='superadmin' ? 
+              <div className="navbar-item has-dropdown is-hoverable">
+                  <a className="navbar-link">Master</a>
 
-            <div className="navbar-item has-dropdown is-hoverable">
-                <a className="navbar-link">Master</a>
+                  <div className="navbar-dropdown">
+                      <a href="http://localhost:3000/user" className="navbar-item">
+                          User
+                      </a>
+                      <a href="http://localhost:3000/user_level" className="navbar-item">
+                          User Level
+                      </a>
+                  </div>
+              </div>
+            : '' }
 
-                <div className="navbar-dropdown">
-                    <a href="http://localhost:3000/user" className="navbar-item">
-                        User
-                    </a>
-                    <a href="http://localhost:3000/user_level" className="navbar-item">
-                        User Level
-                    </a>
-                </div>
-            </div>
+            { userLevel!='vendor' ? 
+              <a href="http://localhost:3000/proposal" className="navbar-item">
+                  Proposal
+              </a>
+            : '' }
 
-            <a href="http://localhost:3000/proposal" className="navbar-item">
-                Proposal
-            </a>
-
-            <a href="http://localhost:3000/approval" className="navbar-item">
-                Approval
-            </a>
+            { userLevel!='hr' ? 
+                <a href="http://localhost:3000/approval" className="navbar-item">
+                    Approval
+                </a>
+            : '' }
 
             <a href="http://localhost:3000/monitoring" className="navbar-item">
                 Monitoring
