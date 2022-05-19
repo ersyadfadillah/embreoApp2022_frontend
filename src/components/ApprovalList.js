@@ -89,7 +89,7 @@ const ApprovalList = () => {
                     <td>{ dateFormat(approval_row.event_date2, "dd/mm/yyyy") }</td>
                     <td>{ dateFormat(approval_row.event_date3, "dd/mm/yyyy") }</td>
                     <td>{ approval_row.event_location }</td>
-                    <td>{ approval_row.status==0 ? 'Pending' : (approval_row.status==2 ? 'Approve' : 'Reject') }</td>
+                    <td>{ approval_row.status==0 ? 'Pending' : (approval_row.status==1 ? 'Approve' : 'Reject') }</td>
                     {/* <td>{ approval_row.update_by!==null ? approval_row.User.nama+' ('+dateFormat(approval_row.updatedAt, "dd/mm/yyyy hh:ss")+')' : '-' }</td>
                     <td>{ approval_row.komen }</td> */}
                     <td>
